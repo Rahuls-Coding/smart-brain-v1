@@ -4,6 +4,8 @@ import Navigation from "./components/Navigation/Navigation"
 import Logo from "./components/Logo/Logo"
 import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm"
 import FaceRecognition from "./components/FaceRecognition/FaceRecognition"
+import Signin from "./components/Signin/Signin"
+import Register from "./components/Register/Register"
 import Rank from "./components/Rank/Rank"
 import Particles from "react-tsparticles";
 import Clarifai, { COLOR_MODEL } from "clarifai";
@@ -22,7 +24,9 @@ class App extends Component {
     this.state = {
       input: "",
       imageUrl: "",
-      box: {}
+      box: {},
+      route: "signin",
+      isSignedIn: false,
     }
   }
   
@@ -60,6 +64,15 @@ class App extends Component {
     .catch(err => console.log(err))
   }
 
+  onRouteChange = (route1) => {
+    if (route1 === "signout") {
+      this.setState({isSignedIn: false})
+    } else if (route1 === "home") {
+      this.setState({isSignedIn: true})
+    }
+    this.setState({route: route1})
+  }
+
   render() {
     return (
     <div className="App"> 
@@ -68,15 +81,27 @@ class App extends Component {
         options={particlesOptions
         }
       />
-      <Navigation />
+      <Navigation isSignedIn= {this.state.isSignedIn}onRouteChange={this.onRouteChange}/>
+      { this.state.route === "home" 
+      ? <div>
       <Logo />
       <Rank />
       <ImageLinkForm 
-        onInputChange={this.onInputChange}
-        onButtonSubmit={this.onButtonSubmit}
-      />
-     <FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box}/>
+      onInputChange={this.onInputChange}
+      onButtonSubmit={this.onButtonSubmit}
+    />
+      <FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box}/>
+    </div>
       
+      : (
+        this.state.route === "signin" 
+        ? <Signin onRouteChange={this.onRouteChange}/> 
+        : <Register onRouteChange={this.onRouteChange}/>
+      )
+     
+        
+      
+      }
     </div>
   );
   }
