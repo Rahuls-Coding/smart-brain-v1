@@ -8,9 +8,12 @@ import Rank from "./components/Rank/Rank"
 import Particles from "react-tsparticles";
 import Clarifai, { COLOR_MODEL } from "clarifai";
 import particlesOptions from "./sample";
+import config from './config'
+
+const mykey = config.KEY
 
 const app = new Clarifai.App({
-  apiKey: "c86133ebdbf34ed7b39b8275595c2056"
+  apiKey: mykey
 })
 
 class App extends Component { 
