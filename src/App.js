@@ -79,13 +79,13 @@ class App extends Component {
     .catch(err => console.log(err))
   }
 
-  onRouteChange = (route1) => {
-    if (route1 === "signout") {
+  onRouteChange = (route) => {
+    if (route === "signout") {
       this.setState({isSignedIn: false})
-    } else if (route1 === "home") {
+    } else if (route === "home") {
       this.setState({isSignedIn: true})
     }
-    this.setState({route: route1})
+    this.setState({route: route})
   }
 
   render() {
@@ -100,14 +100,14 @@ class App extends Component {
       <Navigation isSignedIn= {isSignedIn}onRouteChange={this.onRouteChange}/>
       { route === "home" 
       ? <div>
-      <Logo />
-      <Rank />
-      <ImageLinkForm 
-      onInputChange={this.onInputChange}
-      onButtonSubmit={this.onButtonSubmit}
-    />
-      <FaceRecognition imageUrl={imageUrl} box={box}/>
-    </div>
+            <Logo />
+            <Rank name={this.state.user.name} entries={this.state.user.entries} />
+            <ImageLinkForm 
+            onInputChange={this.onInputChange}
+            onButtonSubmit={this.onButtonSubmit}
+          />
+            <FaceRecognition imageUrl={imageUrl} box={box}/>
+        </div>
       
       : (
         route === "signin" 
