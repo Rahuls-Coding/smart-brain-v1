@@ -1,13 +1,13 @@
 const particlesOptions = {
-    fpsLimit: 60,
+    fpsLimit: 30,
     interactivity: {
       events: {
         onClick: {
-          enable: true,
+          enable: false,
           mode: "push",
         },
         onHover: {
-          enable: true,
+          enable: false,
           mode: "repulse",
         },
         resize: true,
